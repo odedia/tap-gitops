@@ -27,8 +27,6 @@ spec:
           appliveview-sample/app-live-view-appflavours-boot
           appliveview-sample/app-live-view-systemproperties
         developer.conventions/target-containers: workload
-        kubectl.kubernetes.io/last-applied-configuration: |
-          {"apiVersion":"carto.run/v1alpha1","kind":"Workload","metadata":{"annotations":{},"labels":{"app.kubernetes.io/part-of":"todos-app","apps.tanzu.vmware.com/has-tests":"true","apps.tanzu.vmware.com/workload-type":"web"},"name":"todo-service","namespace":"demos"},"spec":{"build":{"env":[{"name":"BP_JVM_VERSION","value":"17"}]},"params":[{"name":"annotations","value":{"autoscaling.knative.dev/minScale":"1"}}],"serviceClaims":[{"name":"db","ref":{"apiVersion":"services.apps.tanzu.vmware.com/v1alpha1","kind":"ResourceClaim","name":"todos-db-claim"}}],"source":{"git":{"ref":{"branch":"main"},"url":"https://github.com/odedia/todo-service"}}}}
         services.conventions.apps.tanzu.vmware.com/postgres: postgresql/42.5.0
       labels:
         app.kubernetes.io/component: run
@@ -47,7 +45,7 @@ spec:
       - env:
         - name: JAVA_TOOL_OPTIONS
           value: -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.endpoint.health.show-details=always -Dmanagement.endpoints.web.base-path="/actuator" -Dmanagement.endpoints.web.exposure.include=* -Dmanagement.health.probes.enabled="true" -Dmanagement.server.port="8081" -Dserver.port="8080" -Dserver.shutdown.grace-period="24s"
-        image: harbor.apps.cf.tanzutime.com/apps/todo-service-demos@sha256:ab0f4394e0e7b6a18ca520c2198a6f08c1a4ea7292b8ef1dfa6a0ed00a78f35e
+        image: harbor.apps.cf.tanzutime.com/apps/todo-service-demos@sha256:ea57e3adaa4909c2d6cb4ae45fa728a48b0e928df9ec9e4f8bbfcf5e87f46828
         livenessProbe:
           httpGet:
             path: /livez
