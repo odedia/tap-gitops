@@ -1,0 +1,24 @@
+apiVersion: servicebinding.io/v1alpha3
+kind: ServiceBinding
+metadata:
+  name: todo-service-db
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"carto.run/v1alpha1","kind":"Workload","metadata":{"annotations":{},"labels":{"app.kubernetes.io/part-of":"todos-app","apps.tanzu.vmware.com/has-tests":"true","apps.tanzu.vmware.com/workload-type":"web"},"name":"todo-service","namespace":"demos"},"spec":{"build":{"env":[{"name":"BP_JVM_VERSION","value":"17"}]},"params":[{"name":"annotations","value":{"autoscaling.knative.dev/minScale":"1"}}],"serviceClaims":[{"name":"db","ref":{"apiVersion":"services.apps.tanzu.vmware.com/v1alpha1","kind":"ResourceClaim","name":"todos-db-claim"}}],"source":{"git":{"ref":{"branch":"main"},"url":"https://github.com/odedia/todo-service"}}}}
+    autoscaling.knative.dev/minScale: "1"
+  labels:
+    app.kubernetes.io/part-of: todos-app
+    apps.tanzu.vmware.com/has-tests: "true"
+    apps.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/component: run
+    carto.run/workload-name: todo-service
+spec:
+  name: db
+  service:
+    apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+    kind: ResourceClaim
+    name: todos-db-claim
+  workload:
+    apiVersion: serving.knative.dev/v1
+    kind: Service
+    name: todo-service
