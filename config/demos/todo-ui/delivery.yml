@@ -24,7 +24,7 @@ spec:
         carto.run/workload-name: todo-ui
     spec:
       containers:
-      - image: harbor.apps.cf.tanzutime.com/apps/todo-ui-demos@sha256:d523646b37dc07538d0ab0d7bf3fdb979d008fe3af6f612a5cde09bd187ba3a1
+      - image: harbor.apps.iterate.tanzutime.com/apps/todo-ui-demos@sha256:3e9c17baccac0c5bd0e83f900707d2dc89defbedb1db3e139c61f1f6e6a7465c
         name: workload
         resources: {}
         securityContext:
