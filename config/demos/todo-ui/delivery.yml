@@ -2,6 +2,9 @@ apiVersion: serving.knative.dev/v1
 kind: Service
 metadata:
   name: todo-ui
+  annotations:
+    ootb.apps.tanzu.vmware.com/servicebinding-workload: "true"
+    ootb.apps.tanzu.vmware.com/apidescriptor-ref: "true"
   labels:
     app.kubernetes.io/part-of: todos-app
     apps.tanzu.vmware.com/has-tests: "false"
@@ -12,10 +15,10 @@ spec:
   template:
     metadata:
       annotations:
-        conventions.apps.tanzu.vmware.com/applied-conventions: appliveview-sample/app-live-view-appflavour-check
+        conventions.carto.run/applied-conventions: appliveview-sample/app-live-view-appflavour-check
         developer.conventions/target-containers: workload
         kubectl.kubernetes.io/last-applied-configuration: |
-          {"apiVersion":"carto.run/v1alpha1","kind":"Workload","metadata":{"annotations":{},"labels":{"app.kubernetes.io/part-of":"todos-app","apps.tanzu.vmware.com/has-tests":"false","apps.tanzu.vmware.com/workload-type":"web"},"name":"todo-ui","namespace":"demos"},"spec":{"build":{"env":[{"name":"BP_NODE_RUN_SCRIPTS","value":"build"},{"name":"BP_WEB_SERVER","value":"httpd"},{"name":"BP_WEB_SERVER_ROOT","value":"dist"},{"name":"BP_WEB_SERVER_ENABLE_PUSH_STATE","value":"true"}]},"params":[{"name":"clusterBuilder","value":"builder-for-web-servers"}],"source":{"git":{"ref":{"branch":"main"},"url":"https://github.com/odedia/todo-ui"}}}}
+          {"apiVersion":"carto.run/v1alpha1","kind":"Workload","metadata":{"annotations":{},"labels":{"app.kubernetes.io/part-of":"todos-app","apps.tanzu.vmware.com/has-tests":"false","apps.tanzu.vmware.com/workload-type":"web"},"name":"todo-ui","namespace":"demos"},"spec":{"build":{"env":[{"name":"BP_NODE_RUN_SCRIPTS","value":"build"},{"name":"BP_WEB_SERVER","value":"httpd"},{"name":"BP_WEB_SERVER_ROOT","value":"dist"},{"name":"BP_WEB_SERVER_ENABLE_PUSH_STATE","value":"true"}]},"source":{"git":{"ref":{"branch":"main"},"url":"https://github.com/odedia/todo-ui"}}}}
       labels:
         app.kubernetes.io/component: run
         app.kubernetes.io/part-of: todos-app
@@ -24,7 +27,7 @@ spec:
         carto.run/workload-name: todo-ui
     spec:
       containers:
-      - image: harbor.apps.iterate.tanzutime.com/apps/todo-ui-demos@sha256:3e9c17baccac0c5bd0e83f900707d2dc89defbedb1db3e139c61f1f6e6a7465c
+      - image: harbor.apps.iterate.tanzutime.com/apps/todo-ui-demos@sha256:fdd031b4bacc6ce2e0e8ec776e984c36d1fb03f2a77f4ecb903dcb5285e8e3fc
         name: workload
         resources: {}
         securityContext:
