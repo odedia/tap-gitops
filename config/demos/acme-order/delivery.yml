@@ -1,0 +1,41 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: acme-order
+  annotations:
+    ootb.apps.tanzu.vmware.com/servicebinding-workload: "true"
+    ootb.apps.tanzu.vmware.com/apidescriptor-ref: "true"
+  labels:
+    app.kubernetes.io/part-of: acme-fitness-store
+    apps.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/component: run
+    carto.run/workload-name: acme-order
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "1"
+        conventions.carto.run/applied-conventions: |-
+          appliveview-sample/app-live-view-appflavour-check
+          appliveview-sample/app-live-view-connector-steeltoe
+          appliveview-sample/app-live-view-appflavours-steeltoe
+        developer.conventions/target-containers: workload
+        kubectl.kubernetes.io/last-applied-configuration: |
+          {"apiVersion":"carto.run/v1alpha1","kind":"Workload","metadata":{"annotations":{},"labels":{"app.kubernetes.io/part-of":"acme-fitness-store","apps.tanzu.vmware.com/workload-type":"web"},"name":"acme-order","namespace":"demos"},"spec":{"params":[{"name":"annotations","value":{"autoscaling.knative.dev/minScale":"1"}}],"source":{"git":{"ref":{"branch":"main"},"url":"https://github.com/odedia/acme-fitness-store"},"subPath":"apps/acme-order"}}}
+      labels:
+        app.kubernetes.io/component: run
+        app.kubernetes.io/part-of: acme-fitness-store
+        apps.tanzu.vmware.com/workload-type: web
+        carto.run/workload-name: acme-order
+        tanzu.app.live.view: "true"
+        tanzu.app.live.view.application.flavours: steeltoe
+        tanzu.app.live.view.application.name: acme-order
+    spec:
+      containers:
+      - image: harbor.apps.iterate.tanzutime.com/apps/acme-order-demos@sha256:d1304f865e379b3df7243d9dd3d3f7c1fb770a830d36c35d481e0c38bac60320
+        name: workload
+        resources: {}
+        securityContext:
+          runAsUser: 1000
+      serviceAccountName: default
+
