@@ -31,8 +31,6 @@ spec:
           appliveview-sample/app-live-view-appflavours-boot
           appliveview-sample/app-live-view-systemproperties
         developer.conventions/target-containers: workload
-        kubectl.kubernetes.io/last-applied-configuration: |
-          {"apiVersion":"carto.run/v1alpha1","kind":"Workload","metadata":{"annotations":{},"labels":{"apis.apps.tanzu.vmware.com/register-api":"true","app.kubernetes.io/part-of":"todos-app","apps.tanzu.vmware.com/has-tests":"true","apps.tanzu.vmware.com/workload-type":"web"},"name":"todo-service","namespace":"demos"},"spec":{"build":{"env":[{"name":"BP_JVM_VERSION","value":"17"}]},"params":[{"name":"annotations","value":{"autoscaling.knative.dev/minScale":"1"}},{"name":"api_descriptor","value":{"description":"A set of API endpoints to manage the resources within the todos app.","location":{"path":"/v3/api-docs"},"owner":"default-team","system":"todos","type":"openapi"}}],"serviceClaims":[{"name":"db","ref":{"apiVersion":"services.apps.tanzu.vmware.com/v1alpha1","kind":"ResourceClaim","name":"todos-db-claim"}}],"source":{"git":{"ref":{"branch":"main"},"url":"https://github.com/odedia/todo-service"}}}}
         services.conventions.apps.tanzu.vmware.com/postgres: postgresql/42.5.0
       labels:
         apis.apps.tanzu.vmware.com/register-api: "true"
