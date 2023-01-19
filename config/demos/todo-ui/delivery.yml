@@ -15,7 +15,10 @@ spec:
   template:
     metadata:
       annotations:
-        conventions.carto.run/applied-conventions: appliveview-sample/app-live-view-appflavour-check
+        conventions.carto.run/applied-conventions: |-
+          spring-boot-convention/auto-configure-actuators-check
+          spring-boot-convention/app-live-view-appflavour-check
+          appliveview-sample/app-live-view-appflavour-check
         developer.conventions/target-containers: workload
         kubectl.kubernetes.io/last-applied-configuration: |
           {"apiVersion":"carto.run/v1alpha1","kind":"Workload","metadata":{"annotations":{},"labels":{"app.kubernetes.io/part-of":"todos-app","apps.tanzu.vmware.com/has-tests":"false","apps.tanzu.vmware.com/workload-type":"web"},"name":"todo-ui","namespace":"demos"},"spec":{"build":{"env":[{"name":"BP_NODE_RUN_SCRIPTS","value":"build"},{"name":"BP_WEB_SERVER","value":"httpd"},{"name":"BP_WEB_SERVER_ROOT","value":"dist"},{"name":"BP_WEB_SERVER_ENABLE_PUSH_STATE","value":"true"}]},"source":{"git":{"ref":{"branch":"main"},"url":"https://github.com/odedia/todo-ui"}}}}
@@ -27,7 +30,7 @@ spec:
         carto.run/workload-name: todo-ui
     spec:
       containers:
-      - image: harbor.apps.iterate.tanzutime.com/apps/todo-ui-demos@sha256:581391d174247c06903fa5724ac92d3365002421eeb0d60ac64eb374000a9f17
+      - image: harbor.apps.iteratelab.tanzutime.com/apps/todo-ui-demos@sha256:3b93c3f8c1455693c3824c1c944e0e580c838ebe5e74355256d7524590fd42be
         name: workload
         resources: {}
         securityContext:
