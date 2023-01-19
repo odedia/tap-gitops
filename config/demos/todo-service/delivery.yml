@@ -52,7 +52,7 @@ spec:
       - env:
         - name: JAVA_TOOL_OPTIONS
           value: -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.endpoint.health.show-details=always -Dmanagement.endpoints.web.base-path="/actuator" -Dmanagement.endpoints.web.exposure.include=* -Dmanagement.health.probes.enabled="true" -Dmanagement.server.port="8081" -Dserver.port="8080" -Dserver.shutdown.grace-period="24s"
-        image: harbor.apps.iterate.tanzutime.com/apps/todo-service-demos@sha256:81c57d05e5dacf48e043fb25639ffb7182072e9986f9447dd016442cb7c91faf
+        image: harbor.apps.iterate.tanzutime.com/apps/todo-service-demos@sha256:832848e2f983eb9cbce9ae0482119c8f7987851668b1960b9e309c376e796fe3
         livenessProbe:
           httpGet:
             path: /livez
