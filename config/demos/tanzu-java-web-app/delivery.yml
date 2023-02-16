@@ -16,6 +16,8 @@ spec:
   template:
     metadata:
       annotations:
+        apps.tanzu.vmware.com/debug: "true"
+        apps.tanzu.vmware.com/live-update: "true"
         autoscaling.knative.dev/minScale: "1"
         boot.spring.io/version: 2.7.5
         conventions.carto.run/applied-conventions: |-
