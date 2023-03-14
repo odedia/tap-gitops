@@ -5,6 +5,7 @@ metadata:
   annotations:
     ootb.apps.tanzu.vmware.com/servicebinding-workload: "true"
     ootb.apps.tanzu.vmware.com/apidescriptor-ref: "true"
+    kapp.k14s.io/change-rule: upsert after upserting servicebinding.io/ServiceBindings
   labels:
     apis.apps.tanzu.vmware.com/register-api: "true"
     app.kubernetes.io/part-of: todos-app
@@ -17,40 +18,44 @@ spec:
     metadata:
       annotations:
         autoscaling.knative.dev/minScale: "1"
-        boot.spring.io/actuator: http://:8081/actuator
         boot.spring.io/version: 2.7.5
         conventions.carto.run/applied-conventions: |-
+          spring-boot-convention/auto-configure-actuators-check
           spring-boot-convention/spring-boot
           spring-boot-convention/spring-boot-graceful-shutdown
           spring-boot-convention/spring-boot-web
           spring-boot-convention/spring-boot-actuator
           spring-boot-convention/spring-boot-actuator-probes
+          spring-boot-convention/app-live-view-appflavour-check
+          spring-boot-convention/app-live-view-connector-boot
+          spring-boot-convention/app-live-view-appflavours-boot
           spring-boot-convention/service-intent-postgres
           appliveview-sample/app-live-view-appflavour-check
-          appliveview-sample/app-live-view-connector-boot
-          appliveview-sample/app-live-view-appflavours-boot
-          appliveview-sample/app-live-view-systemproperties
         developer.conventions/target-containers: workload
-        services.conventions.apps.tanzu.vmware.com/postgres: postgresql/42.5.0
+        kubectl.kubernetes.io/last-applied-configuration: |
+          {"apiVersion":"carto.run/v1alpha1","kind":"Workload","metadata":{"annotations":{},"labels":{"apis.apps.tanzu.vmware.com/register-api":"true","app.kubernetes.io/part-of":"todos-app","apps.tanzu.vmware.com/has-tests":"true","apps.tanzu.vmware.com/workload-type":"web"},"name":"todo-service","namespace":"demos"},"spec":{"build":{"env":[{"name":"BP_JVM_VERSION","value":"17"}]},"params":[{"name":"annotations","value":{"autoscaling.knative.dev/minScale":"1"}},{"name":"api_descriptor","value":{"description":"A set of API endpoints to manage the resources within the todos app.","location":{"path":"/v3/api-docs"},"owner":"default-team","system":"todos","type":"openapi"}}],"serviceClaims":[{"name":"db","ref":{"apiVersion":"services.apps.tanzu.vmware.com/v1alpha1","kind":"ResourceClaim","name":"todos-db-claim"}}],"source":{"git":{"ref":{"branch":"main"},"url":"https://github.com/odedia/todo-service"}}}}
+        services.conventions.carto.run/postgres: postgresql/42.5.0
       labels:
         apis.apps.tanzu.vmware.com/register-api: "true"
         app.kubernetes.io/component: run
         app.kubernetes.io/part-of: todos-app
+        apps.tanzu.vmware.com/auto-configure-actuators: "false"
         apps.tanzu.vmware.com/has-tests: "true"
         apps.tanzu.vmware.com/workload-type: web
         carto.run/workload-name: todo-service
-        conventions.apps.tanzu.vmware.com/framework: spring-boot
-        services.conventions.apps.tanzu.vmware.com/postgres: workload
+        conventions.carto.run/framework: spring-boot
+        services.conventions.carto.run/postgres: workload
         tanzu.app.live.view: "true"
-        tanzu.app.live.view.application.actuator.port: "8081"
+        tanzu.app.live.view.application.actuator.path: actuator
+        tanzu.app.live.view.application.actuator.port: "8080"
         tanzu.app.live.view.application.flavours: spring-boot
         tanzu.app.live.view.application.name: todo-service
     spec:
       containers:
       - env:
         - name: JAVA_TOOL_OPTIONS
-          value: -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.endpoint.health.show-details=always -Dmanagement.endpoints.web.base-path="/actuator" -Dmanagement.endpoints.web.exposure.include=* -Dmanagement.health.probes.enabled="true" -Dmanagement.server.port="8081" -Dserver.port="8080" -Dserver.shutdown.grace-period="24s"
-        image: harbor.apps.iterate.tanzutime.com/apps/todo-service-demos@sha256:aecec1452f3a355f724b8500509be40a27c432e51a3e92de8c1981658dc908e2
+          value: -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.health.probes.enabled="true" -Dserver.port="8080" -Dserver.shutdown.grace-period="24s"
+        image: harbor.apps.iteratelab.tanzutime.com/apps/todo-service-demos@sha256:e0eca0c5eec558bd0f249b6deaf8bfb8f941a875e9efd868e0f53cccc4636d36
         livenessProbe:
           httpGet:
             path: /livez
