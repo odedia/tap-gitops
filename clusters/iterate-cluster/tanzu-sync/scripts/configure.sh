@@ -13,7 +13,7 @@ Environment Variables:
 EOF
 }
 
-if [[ $# -ne 0 ]]; then
+if [ $# -ne 0 ]; then
   usage
   exit 1
 fi

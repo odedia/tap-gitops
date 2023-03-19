@@ -16,13 +16,13 @@ Environment Variables:
 EOF
 }
 
-for envvar in INSTALL_REGISTRY_USERNAME INSTALL_REGISTRY_PASSWORD INSTALL_REGISTRY_HOSTNAME GIT_SSH_PRIVATE_KEY GIT_KNOWN_HOSTS AGE_KEY ; do
-  if [[ ! -v ${envvar} ]]; then
-    usage
-    >&2 echo "Expected env var ${envvar} to be set, but was not."
-    exit 1
-  fi
-done
+# for envvar in INSTALL_REGISTRY_USERNAME INSTALL_REGISTRY_PASSWORD INSTALL_REGISTRY_HOSTNAME GIT_SSH_PRIVATE_KEY GIT_KNOWN_HOSTS AGE_KEY ; do
+#   if [[ ! -v ${envvar} ]]; then
+#     usage
+#     >&2 echo "Expected env var ${envvar} to be set, but was not."
+#     exit 1
+#   fi
+# done
 
 # pass in the multi-line strings as a data-values file as it properly
 # escapes the multi-line values.
@@ -47,8 +47,8 @@ EOF
 )
 
 # Do not display sensitive values to the terminal.
-if [[ -t 1 ]]; then
-  >&2 echo "Sensitive values are present; will be used by ./tanzu-sync/scripts/deploy.sh"
-else
-  echo "${sensitive_tanzu_sync_values}"
-fi
+# if [[ -t 1 ]]; then
+#   >&2 echo "Sensitive values are present; will be used by ./tanzu-sync/scripts/deploy.sh"
+# else
+#   echo "${sensitive_tanzu_sync_values}"
+# fi
