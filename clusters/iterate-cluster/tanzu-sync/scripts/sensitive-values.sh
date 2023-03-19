@@ -17,7 +17,7 @@ EOF
 }
 
 for envvar in INSTALL_REGISTRY_USERNAME INSTALL_REGISTRY_PASSWORD INSTALL_REGISTRY_HOSTNAME GIT_SSH_PRIVATE_KEY GIT_KNOWN_HOSTS AGE_KEY ; do
-  if  [ -z "${envvar}" ]; then
+  if [[ ! -v ${envvar} ]]; then
     usage
     >&2 echo "Expected env var ${envvar} to be set, but was not."
     exit 1
@@ -47,7 +47,7 @@ EOF
 )
 
 # Do not display sensitive values to the terminal.
-if tty -s; then
+if [[ -t 1 ]]; then
   >&2 echo "Sensitive values are present; will be used by ./tanzu-sync/scripts/deploy.sh"
 else
   echo "${sensitive_tanzu_sync_values}"
