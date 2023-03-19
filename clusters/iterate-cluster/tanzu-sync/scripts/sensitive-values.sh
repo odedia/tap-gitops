@@ -50,5 +50,5 @@ EOF
 # if [[ -t 1 ]]; then
 #   >&2 echo "Sensitive values are present; will be used by ./tanzu-sync/scripts/deploy.sh"
 # else
-#   echo "${sensitive_tanzu_sync_values}"
+echo "${sensitive_tanzu_sync_values}"
 # fi
