@@ -1,19 +1,21 @@
-profile: iterate
-
-shared:
-  kubernetes_distribution: ""
-ceip_policy_disclosed: true # Installation fails if this is not set to true. Not a string.
-buildservice:
-  exclude_dependencies: true
-supply_chain: basic
-image_policy_webhook:
-  allow_unmatched_tags: true
-contour:
-  envoy:
-    service:
-      type: LoadBalancer # (Optional) Defaults to LoadBalancer.
-appliveview_connector:
-  backend:
-    sslDeactivated: true
-    ingressEnabled: true
+---
+tap_install:
+  values:
+    shared:
+      kubernetes_distribution: ""
+    profile: iterate
+    ceip_policy_disclosed: true # Installation fails if this is not set to true. Not a string.
+    buildservice:
+      exclude_dependencies: true
+    supply_chain: basic
+    image_policy_webhook:
+      allow_unmatched_tags: true
+    contour:
+      envoy:
+        service:
+          type: LoadBalancer # (Optional) Defaults to LoadBalancer.
+    appliveview_connector:
+      backend:
+        sslDeactivated: true
+        ingressEnabled: true
 
