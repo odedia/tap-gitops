@@ -19,6 +19,7 @@ spec:
         autoscaling.knative.dev/minScale: "1"
         boot.spring.io/version: 2.7.11
         conventions.carto.run/applied-conventions: |-
+          appliveview-sample/app-live-view-appflavour-check
           spring-boot-convention/auto-configure-actuators-check
           spring-boot-convention/spring-boot
           spring-boot-convention/spring-boot-graceful-shutdown
@@ -28,7 +29,6 @@ spec:
           spring-boot-convention/app-live-view-appflavour-check
           spring-boot-convention/app-live-view-connector-boot
           spring-boot-convention/app-live-view-appflavours-boot
-          appliveview-sample/app-live-view-appflavour-check
         developer.conventions/target-containers: workload
       labels:
         app.kubernetes.io/component: run
@@ -48,7 +48,7 @@ spec:
       - env:
         - name: JAVA_TOOL_OPTIONS
           value: -Dmanagement.endpoint.health.probes.add-additional-paths="true" -Dmanagement.health.probes.enabled="true" -Dserver.port="8080" -Dserver.shutdown.grace-period="24s"
-        image: harbor.apps.iteratelab.tanzutime.com/apps/tanzu-java-web-app-demos@sha256:333fa4363003269e4fd1775841838249ae0f849186d47f5af5a6cc65400dd20f
+        image: harbor.apps.iteratelab.tanzutime.com/apps/tanzu-java-web-app-demos@sha256:a5736f001819e4cf4972ed2d8aefa5053a7dbc33021f5087079a54ad038adef8
         livenessProbe:
           httpGet:
             path: /livez
