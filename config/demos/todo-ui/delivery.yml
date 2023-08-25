@@ -5,6 +5,7 @@ metadata:
   annotations:
     ootb.apps.tanzu.vmware.com/servicebinding-workload: "true"
     ootb.apps.tanzu.vmware.com/apidescriptor-ref: "true"
+    kapp.k14s.io/change-rule: upsert after upserting servicebinding.io/ServiceBindings
   labels:
     app.kubernetes.io/part-of: todos-app
     apps.tanzu.vmware.com/has-tests: "false"
@@ -15,7 +16,10 @@ spec:
   template:
     metadata:
       annotations:
-        conventions.carto.run/applied-conventions: appliveview-sample/app-live-view-appflavour-check
+        conventions.carto.run/applied-conventions: |-
+          appliveview-sample/app-live-view-appflavour-check
+          spring-boot-convention/auto-configure-actuators-check
+          spring-boot-convention/app-live-view-appflavour-check
         developer.conventions/target-containers: workload
         kubectl.kubernetes.io/last-applied-configuration: |
           {"apiVersion":"carto.run/v1alpha1","kind":"Workload","metadata":{"annotations":{},"labels":{"app.kubernetes.io/part-of":"todos-app","apps.tanzu.vmware.com/has-tests":"false","apps.tanzu.vmware.com/workload-type":"web"},"name":"todo-ui","namespace":"demos"},"spec":{"build":{"env":[{"name":"BP_NODE_RUN_SCRIPTS","value":"build"},{"name":"BP_WEB_SERVER","value":"httpd"},{"name":"BP_WEB_SERVER_ROOT","value":"dist"},{"name":"BP_WEB_SERVER_ENABLE_PUSH_STATE","value":"true"}]},"source":{"git":{"ref":{"branch":"main"},"url":"https://github.com/odedia/todo-ui"}}}}
@@ -27,7 +31,7 @@ spec:
         carto.run/workload-name: todo-ui
     spec:
       containers:
-      - image: harbor.apps.iterate.tanzutime.com/apps/todo-ui-demos@sha256:31dfcff95d41a1c0d2f12f15b7a839f7ca448806550929c3e2641971a444e459
+      - image: harbor.apps.iteratelab.tanzutime.com/apps/todo-ui-demos@sha256:997c1bc178813f8b1dc4faec702e3433b8d13fc33fca8480d3ad0ccbf3b7f101
         name: workload
         resources: {}
         securityContext:
